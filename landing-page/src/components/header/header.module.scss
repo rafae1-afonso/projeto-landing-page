@@ -6,7 +6,8 @@
     border-bottom: 0.5px solid $gray-color;
     padding: 34px 180px;
 
-    display: flex;
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
     align-items: center;
     justify-content: space-between;
 }
@@ -19,6 +20,10 @@
     }
 }
 
+.action {
+    text-align: end;
+}
+
 .button {
     padding: 15px 50px;
     border-radius: 5px;
@@ -26,4 +31,5 @@
     font-weight: bold;
     background-color: $green-color;
     color: white;
+    border: none;
 }

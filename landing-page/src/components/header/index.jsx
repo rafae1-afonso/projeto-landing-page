@@ -6,14 +6,14 @@ import Styles from './header.module.scss';
 export const Header = () => {
     return <div className={Styles.container}>
         <div className="logotipo">
-            <Image src={Logo} />
+            <Image src={Logo} alt="Logo"/>
         </div>
         <div className={Styles.menu}>
             <Link href='/'>Home</Link>
             <Link href='/'>O que fazemos</Link>
             <Link href='/'>Cases</Link>
         </div>
-        <div className="action">
+        <div className={Styles.action}>
             <button className={Styles.button}>Fale conosco</button>
         </div>
     </div>
