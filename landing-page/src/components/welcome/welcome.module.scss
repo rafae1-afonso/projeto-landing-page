@@ -1,4 +1,16 @@
+@import '../../styles/mixins/padding.scss';
 @import '../../styles/mixins/colors.scss';
+
+.container {
+    @include Padding;
+    height: 100vh;
+    padding-top: 219px;
+    background-image: url('../../../public/images/fundoWelcome.svg');
+    background-repeat: no-repeat;
+    background-size: cover;
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+}
 
 .text {
     h1 {
@@ -8,5 +20,11 @@
 
     p {
         font-size: 30px;
+        opacity: .7;
+        margin: 2.5rem 0;
     }
+}
+
+.image {
+    text-align: end;
 }

@@ -1,10 +1,14 @@
 @import '../../styles/mixins/colors.scss';
+@import '../../styles/mixins/padding.scss';
 
 .container {
+    @include Padding;
+    padding-top: 34px;
+    padding-bottom: 34px;
     width: 100%;
+    color: white;
     background-color: $purple-color;
     border-bottom: 0.5px solid $gray-color;
-    padding: 34px 180px;
 
     display: grid;
     grid-template-columns: repeat(3, 1fr);
