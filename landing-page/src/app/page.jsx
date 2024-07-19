@@ -1,8 +1,10 @@
 import { Header } from "@/components/header";
 import { Welcome } from "@/components/welcome";
+import { Features } from "@/components/features";
+import { Contato } from "@/components/contato";
 
 import styles from "./page.module.scss";
-import { Features } from "@/components/features";
+
 
 export default function Home() {
   return (
@@ -10,6 +12,7 @@ export default function Home() {
       <Header/>
       <Welcome/>
       <Features/>
+      <Contato/>
     </main>
   );
 }
