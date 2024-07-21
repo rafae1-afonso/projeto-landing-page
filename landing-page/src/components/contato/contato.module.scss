@@ -1,5 +1,7 @@
 @import '../../styles/mixins/colors.scss';
 @import '../../styles/mixins/padding.scss';
+@import '../../styles/mixins/fonts.scss';
+@import '../../styles/mixins/responsive.scss';
 
 .container {
     @include Padding;
@@ -13,7 +15,13 @@
     background-repeat: no-repeat;
     background-size: cover;
 
+    margin-top: 10rem;
     margin-bottom: 10rem;
+
+    @include Phone {
+        grid-template-columns: 1fr;
+        gap: 15px;
+    }
 }
 
 .texts {
@@ -44,7 +52,7 @@
     h1 {
         color: $purple-color;
         font-weight: bold;
-        font-size: 35px;
+        @include SizeMedium;
         
     }
 
@@ -52,9 +60,18 @@
         display: grid;
         gap: 23px;
     }
+
+    @include Phone {
+        padding: 1rem
+
+        form {
+            gap: 1rem;
+        }
+    }
 }
 
 .footer {
+    @include SizeSmall;
     padding: 0 6rem;
     grid-column-start: 2;
     text-align: center;
@@ -65,5 +82,10 @@
     span {
         color: white;
         cursor: pointer;
+    }
+
+    @include Phone {
+        grid-column-start: 1;
+        padding: 0 1rem;
     }
 }

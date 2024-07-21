@@ -6,8 +6,8 @@ export const Features = () => {
     return <div className={Styles.container}>
 
         <h1>Neste bairro, não há agência melhor. Garantimos.</h1>
-        <p>Lorem ipsum dolor sit, amet consectetur adipisicing elit. Nesciunt eos non rerum? Optio
-            nesciunt nemo beatae placeat repudiandae quod harum nam, eos illo temporibus, doloremque, autem iure totam numquam voluptate.
+        <p>
+            Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.
         </p>
 
         <div className={Styles.features}>

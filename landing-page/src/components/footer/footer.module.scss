@@ -1,5 +1,7 @@
 @import '../../styles/mixins/padding.scss';
 @import '../../styles/mixins/colors.scss';
+@import '../../styles/mixins/responsive.scss';
+@import '../../styles/mixins/fonts.scss';
 
 .container {
     @include Padding;
@@ -7,6 +9,12 @@
     background-color: $purple3-color;
     display: grid;
     grid-template-columns: repeat(4, 1fr);
+
+    @include Phone {
+        grid-template-columns: 1fr;
+        padding-top: 1rem;
+        gap: 1rem;
+    }
 }
 
 .column {
@@ -18,12 +26,12 @@
 
 
     .title {
-        font-size: 29px;
+        @include SizeNormal;
         color: white;
     }
 
     h1 {
-        font-size: 24px;
+        @include SizeSmall;
         color: $green2-color;
     }
 
@@ -42,6 +50,14 @@
         align-items: center;
         justify-content: center;
     }
+
+    @include Phone {
+        margin-top: 0px;
+
+        &.alignRight {
+            text-align: left;
+        }
+    }
 }
 
 .allRightReserved {
@@ -50,4 +66,8 @@
     color: $gray-color;
     grid-column: span 4;
     text-align: center;
+
+    @include Phone {
+        grid-column: span 1;
+    }
 }
