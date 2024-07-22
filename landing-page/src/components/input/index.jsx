@@ -1,6 +1,6 @@
 import Styles from './input.module.scss'
 
-export const Input = ({type, placeholder, pattern, required}) => {
+export const Input = ({type, placeholder, pattern, required, onBlur}) => {
     return (
         <input 
         type={type}
@@ -8,6 +8,7 @@ export const Input = ({type, placeholder, pattern, required}) => {
         pattern={pattern}
         required={required}
         className={Styles.input}
+        onBlur={onBlur}
        />
     )
 }
