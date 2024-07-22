@@ -18,6 +18,16 @@
         grid-template-rows: max-content;
         padding-top: 1rem;
     }
+
+    @include Tablet {
+        height: 100%;
+        margin-bottom: 4rem;
+        padding-top: 4rem;
+    }
+
+    @include Laptop {
+        padding-top: 6rem;
+    }
 }
 
 .text {
