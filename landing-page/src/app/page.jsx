@@ -1,3 +1,5 @@
+'use client'
+
 import { Header } from "@/components/header";
 import { Welcome } from "@/components/welcome";
 import { Features } from "@/components/features";

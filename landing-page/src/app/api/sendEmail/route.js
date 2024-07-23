@@ -4,7 +4,6 @@ import { NextResponse } from 'next/server'
 export async function POST(req) {
 
     const {messageBody} = await req.json();
-    console.log(messageBody);
 
     const client = new SMTPClient({
         user: process.env.EMAIL,

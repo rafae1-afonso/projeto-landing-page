@@ -1,83 +1,155 @@
 "use client"
 
+import axios from 'axios';
 import Link from 'next/link';
+import { useFormik } from 'formik';
+import * as Yup from 'yup';
+import { useState } from 'react';
+
+import Styles from './contato.module.scss';
+
 import { Button } from '../button';
 import { Input } from '../input';
 import { Select } from '../select';
-import Styles from './contato.module.scss';
-import axios from 'axios';
-import { useState } from 'react';
+import { Loading } from '../loading';
+import { SuccessModal } from '../successModal';
+import { FailModal } from '../failModal';
 
 export const Contato = () => {
-    const [nome, setNome] = useState(null);
-    const [telefone, setTelefone] = useState(null);
-    const [email, setEmail] = useState(null);
-    const [site, setSite] = useState(null);
-    const [midia, setMidia] = useState(null);
+    const [isloading, setLoading] = useState(false);
+    const [successModal, setSuccessModal] = useState(false);
+    const [failModal, setFailModal] = useState(false);
 
-    console.log('teste:', midia)
+    const formik = useFormik({
+        initialValues: {
+            name: '',
+            email: '',
+            phone: '',
+            website: '',
+            midia: '',
+        },
+        validationSchema: Yup.object({
+            name: Yup.string()
+                .required('Campo Obrigatório'),
+            email: Yup.string()
+                .email('E-mail inválido')
+                .required('Campo Obrigatório'),
+            phone: Yup.string()
+                .matches('', 'Digite um telefone válido')
+                .required('Campo Obrigatório'),
+            website: Yup.string()
+                .required('Campo Obrigatório'),
+            midia: Yup.string()
+                .required('Campo Obrigatório'),
+        }),
+        validateOnChange: false,
+        validateOnBlur: false,
+        onSubmit: (values) => handleSubmitForm(values)
+    })
 
-    const SendEmail = () => {
+    const handleSubmitForm = (values) => {
+        setLoading(true);
         axios
-            .post('/api/sendEmail/', { messageBody: `Nome: ${nome}, Email: ${email}, Telefone: ${telefone}, Site: ${site}, Midia: ${midia}` })
-            .then(() => console.log('yey'))
-            .catch(() => console.log('F'))
+            .post('/api/sendEmail/', { messageBody: `Nome: ${values.name}, Email: ${values.email}, Telefone: ${values.phone}, Site: ${values.website}, Midia: ${values.midia}` })
+            .then(() => {
+                formik.resetForm(); 
+                setLoading(false);
+                setSuccessModal(true);
+            })
+            .catch(() => {
+                setLoading(false);
+                setFailModal(true);
+            })
     }
 
-    return <div className={Styles.container}>
-        <div className={Styles.texts}>
-            <span>ENTRE EM CONTATO</span>
-            <h1>Aumente seu resultado de vendas e performance</h1>
-            <p>
-                Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna
-            </p>
-        </div>
-        <div className={Styles.form}>
-            <h1>Fale com um especialista</h1>
+    const closeModal = () => {
+        setFailModal(false);
+        setSuccessModal(false);
+    }
 
-            <Input
-                type="text"
-                placeholder='Nome completo'
-                onBlur={(e) => setNome(e.target.value)}
-                required
-            />
-            <Input
-                type="email"
-                placeholder='Email profissional'
-                onBlur={(e) => setEmail(e.target.value)}
-                required
-            />
-            <Input
-                type="text"
-                placeholder='Celular/Whatsapp'
-                pattern="^[+]*[(]{0,1}[0-9]{1,4}[)]{0,1}[-\s\./0-9]*$"
-                onBlur={(e) => setTelefone(e.target.value)}
-                required
-            />
-            <Input
-                type="text"
-                placeholder='Site'
-                onBlur={(e) => setSite(e.target.value)}
-                required
-            />
+    return (
+        <>
+            {isloading && <Loading />}
+            {successModal && <SuccessModal closeModal={closeModal}/>}
+            {failModal && <FailModal closeModal={closeModal}/>}
 
-            <Select
-                placeholder='Orçamento para mídia'
-                options={[
-                    { label: 'Instagram', value: 'instagram' },
-                    { label: 'Facebook', value: 'facebook' },
-                ]}
-                onChange={(e) => setMidia(e.target.value)}
-                required
-            />
+            <div className={Styles.container} id='contato'>
+                <div className={Styles.texts}>
+                    <span>ENTRE EM CONTATO</span>
+                    <h1>Aumente seu resultado de vendas e performance</h1>
+                    <p>
+                        Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna
+                    </p>
+                </div>
+                <div className={Styles.form}>
+                    <h1>Fale com um especialista</h1>
 
-            <Button title='Enviar' kind='full' onClick={() => SendEmail()} />
-        </div>
+                    <form id='formulario' onSubmit={formik.handleSubmit}>
+                        <Input
+                            id='name'
+                            name='name'
+                            type="text"
+                            placeholder='Nome completo'
+                            onBlur={formik.handleBlur}
+                            onChange={formik.handleChange}
+                            value={formik.values.name}
+                            required
+                        />
+                        <Input
+                            id='email'
+                            name='email'
+                            type="email"
+                            placeholder='Email profissional'
+                            onBlur={formik.handleBlur}
+                            onChange={formik.handleChange}
+                            value={formik.values.email}
+                            required
+                        />
+                        <Input
+                            id='phone'
+                            name='phone'
+                            type="text"
+                            placeholder='Celular/Whatsapp'
+                            pattern="^[+]*[(]{0,1}[0-9]{1,4}[)]{0,1}[-\s\./0-9]*$"
+                            onBlur={formik.handleBlur}
+                            onChange={formik.handleChange}
+                            value={formik.values.phone}
+                            required
+                        />
+                        <Input
+                            id='website'
+                            name='website'
+                            type="text"
+                            placeholder='Site'
+                            onBlur={formik.handleBlur}
+                            onChange={formik.handleChange}
+                            value={formik.values.website}
+                            required
+                        />
 
-        <div className={Styles.footer}>
-            <p>
-                Ao enviar esse formulário, você reconhece que leu e concorda com a nossa <Link href='/'><span>Política de Privacidade</span></Link>.
-            </p>
-        </div>
-    </div>
+                        <Select
+                            id='midia'
+                            name='midia'
+                            placeholder='Orçamento para mídia'
+                            options={[
+                                { label: 'Instagram', value: 'instagram' },
+                                { label: 'Facebook', value: 'facebook' },
+                            ]}
+                            onChange={formik.handleChange}
+                            value={formik.values.midia}
+                            required
+                        />
+
+                        <Button type='submit' title='Enviar' kind='full' />
+                    </form>
+                </div>
+
+                <div className={Styles.footer}>
+                    <p>
+                        Ao enviar esse formulário, você reconhece que leu e concorda com a nossa <Link href='/'><span>Política de Privacidade</span></Link>.
+                    </p>
+                </div>
+            </div>
+        </>
+    )
 }
